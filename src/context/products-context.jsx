@@ -33,11 +33,19 @@ export const ProductsContextProvider = (props) => {
     setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] - 1 }));
   };
 
+  const sortPriceAscending = () => {
+    const sortedByPriceAscending = PRODUCTS.sort((a, b) =>
+      a.price > b.price ? 1 : -1
+    );
+  };
+
   const contextValue = {
     cartItems,
     addToCart,
     removeFromCart,
     getTotalCartAmount,
+    // sortedByPriceAscending,
+    sortPriceAscending,
   };
   console.log(cartItems);
   return (

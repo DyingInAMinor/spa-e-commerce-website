@@ -9,7 +9,7 @@ import {
   Button,
 } from "@material-tailwind/react";
 
-import { PlusIcon, MinusIcon } from "@heroicons/react/24/outline";
+import { PlusIcon } from "@heroicons/react/24/outline";
 
 export const Product = (props) => {
   const { id, productName, price, productImage } = props.data;
