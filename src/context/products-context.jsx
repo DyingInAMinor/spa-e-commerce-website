@@ -12,6 +12,7 @@ const getDefaultCart = () => {
 };
 
 export const ProductsContextProvider = (props) => {
+  const [productsGrid, setProductsGrid] = useState(PRODUCTS);
   const [cartItems, setCartItems] = useState(getDefaultCart);
 
   const getTotalCartAmount = () => {
@@ -37,6 +38,21 @@ export const ProductsContextProvider = (props) => {
     const sortedByPriceAscending = PRODUCTS.sort((a, b) =>
       a.price > b.price ? 1 : -1
     );
+    return sortedByPriceAscending;
+  };
+
+  const sortPrice = (type) => {
+    if (type === "asc") {
+      return setProductsGrid(
+        productsGrid.toSorted((a, b) => (a.price > b.price ? 1 : -1))
+      );
+    } else if (type === "desc") {
+      return setProductsGrid(
+        productsGrid.toSorted((a, b) => (a.price < b.price ? 1 : -1))
+      );
+    } else {
+      return "Invalid argument";
+    }
   };
 
   const contextValue = {
@@ -44,8 +60,9 @@ export const ProductsContextProvider = (props) => {
     addToCart,
     removeFromCart,
     getTotalCartAmount,
-    // sortedByPriceAscending,
-    sortPriceAscending,
+    // sortPriceAscending,
+    sortPrice,
+    productsGrid,
   };
   console.log(cartItems);
   return (

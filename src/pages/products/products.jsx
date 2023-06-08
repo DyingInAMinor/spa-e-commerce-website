@@ -15,17 +15,29 @@ import {
 import {
   AdjustmentsVerticalIcon,
   ChevronDownIcon,
-  ArrowSmallDownIcon,
-  ArrowSmallUpIcon,
+  ArrowUpIcon,
+  ArrowDownIcon,
 } from "@heroicons/react/24/outline";
 
 export const SortingMenu = () => {
   const [isInputVisible, setIsInputVisible] = useState(false);
+  const [sortPriceType, setSortPriceType] = useState("asc");
   const toggleInputVisibility = () => {
     setIsInputVisible(!isInputVisible);
   };
 
-  const { sortPriceAscending } = useContext(ProductsContext);
+  const { sortPrice, productsGrid } = useContext(ProductsContext);
+
+  const handleSort = () => {
+    if (sortPriceType === "asc") {
+      sortPrice("desc");
+      setSortPriceType("desc");
+    } else {
+      sortPrice("asc");
+      setSortPriceType("asc");
+    }
+    return 0;
+  };
 
   return (
     <div className="flex items-center gap-3 ml-5 mt-4">
@@ -38,39 +50,21 @@ export const SortingMenu = () => {
         <AdjustmentsVerticalIcon strokeWidth={2} className="h-5 w-5" />{" "}
         Сортировать по :
       </Button>
-      <Menu placement="bottom">
-        <MenuHandler>
-          <Button
-            variant="text"
-            color="blue-gray"
-            ripple={false}
-            className="flex items-center gap-3 hover:bg-transparent active:bg-transparent"
-          >
-            <ChevronDownIcon strokeWidth={2} className="h-5 w-5" />
-            Цена
-          </Button>
-        </MenuHandler>
-        <MenuList>
-          <MenuItem className="flex items-center">
-            <Button
-              className="flex items-center gap-1"
-              onClick={sortPriceAscending}
-            >
-              По возрастанию
-              <ArrowSmallUpIcon strokeWidth={2} className="ml-3 mr-1 h-5 w-5" />
-            </Button>
-          </MenuItem>
-          <MenuItem className="flex items-center">
-            <div className="flex items-center gap-5 ">
-              По убыванию <br></br>
-              <ArrowSmallDownIcon
-                strokeWidth={2}
-                className="ml-4 mr-3 pr-1 h-5 w-5"
-              />{" "}
-            </div>
-          </MenuItem>
-        </MenuList>
-      </Menu>
+
+      <Button
+        variant="text"
+        color="blue-gray"
+        ripple={false}
+        className="flex items-center gap-1 hover:bg-transparent active:bg-transparent"
+        onClick={handleSort}
+      >
+        Цена
+        {sortPriceType === "asc" ? (
+          <ArrowUpIcon strokeWidth={2} className="h-4 w-4" />
+        ) : (
+          <ArrowDownIcon strokeWidth={2} className="h-4 w-4" />
+        )}
+      </Button>
 
       <Button
         variant="text"
@@ -99,24 +93,19 @@ export const SortingMenu = () => {
           </div>
         )}
       </div>
-
-      {/* <Input
-        type="text"
-        placeholder="Enter input"
-        className="px-4 py-2 border border-blue-gray rounded-full focus:outline-none"
-      /> */}
     </div>
   );
 };
 
 export const Products = () => {
+  const { productsGrid } = useContext(ProductsContext);
   return (
     <div className="">
       <div className="flex flex-col justify-center mb-4">
         <SortingMenu />
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 pl-5 pr-5 mt-5">
-        {PRODUCTS.map((product, index) => (
+        {productsGrid.map((product, index) => (
           <Product key={index} data={product} />
         ))}
       </div>
