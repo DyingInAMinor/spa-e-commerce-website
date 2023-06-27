@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { PRODUCTS } from "../../productsList";
 import { Product } from "./product";
 import { ProductsContext } from "../../context/products-context";
@@ -19,14 +19,26 @@ import {
   ArrowDownIcon,
 } from "@heroicons/react/24/outline";
 
-export const SortingMenu = () => {
+export const SortingMenu = (props) => {
   const [isInputVisible, setIsInputVisible] = useState(false);
   const [sortPriceType, setSortPriceType] = useState("asc");
+  const [inputState, setInputState] = useState("");
+  // const [filteredProducts, setFilteredProducts] = useState([]);
+
+  const sortingByName = (inputState) => {
+    const filtered = productsGrid.filter((product) =>
+      product.productName.toLowerCase().includes(inputState.toLowerCase())
+    );
+    props.setFilteredProducts(filtered);
+    props.setFilteredPattern(inputState);
+  };
+
   const toggleInputVisibility = () => {
     setIsInputVisible(!isInputVisible);
   };
 
-  const { sortPrice, productsGrid } = useContext(ProductsContext);
+  const { sortPrice, productsGrid, setProductsGrid } =
+    useContext(ProductsContext);
 
   const handleSort = () => {
     if (sortPriceType === "asc") {
@@ -38,6 +50,10 @@ export const SortingMenu = () => {
     }
     return 0;
   };
+
+  useEffect(() => {
+    sortingByName(inputState, PRODUCTS);
+  }, [inputState, PRODUCTS]);
 
   return (
     <div className="flex items-center gap-3 ml-5 mt-4">
@@ -88,7 +104,7 @@ export const SortingMenu = () => {
               variant="static"
               color="blue-gray"
               placeholder="Ключевые слова"
-              className=" "
+              onChange={(e) => sortingByName(e.target.value)}
             />
           </div>
         )}
@@ -99,14 +115,28 @@ export const SortingMenu = () => {
 
 export const Products = () => {
   const { productsGrid } = useContext(ProductsContext);
+  const [filteredProducts, setFilteredProducts] = useState(productsGrid);
+  const [filteredPattern, setFilteredPattern] = useState("");
+
+  useEffect(() => {
+    setFilteredProducts(productsGrid);
+  }, [productsGrid]);
   return (
     <div className="">
       <div className="flex flex-col justify-center mb-4">
-        <SortingMenu />
+        <SortingMenu
+          setFilteredProducts={setFilteredProducts}
+          setFilteredPattern={setFilteredPattern}
+        />{" "}
       </div>
+
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 pl-5 pr-5 mt-5">
-        {productsGrid.map((product, index) => (
-          <Product key={index} data={product} />
+        {filteredProducts.map((product, index) => (
+          <Product
+            key={index}
+            data={product}
+            filteredPattern={filteredPattern}
+          />
         ))}
       </div>
     </div>

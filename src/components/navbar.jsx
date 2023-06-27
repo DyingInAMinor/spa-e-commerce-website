@@ -3,14 +3,26 @@ import { Link } from "react-router-dom";
 import {
   Navbar,
   Typography,
-  Button,
   IconButton,
+  Badge,
+  Button,
 } from "@material-tailwind/react";
 
 import { ShoppingCartIcon } from "@heroicons/react/24/outline";
+import { PRODUCTS } from "../productsList";
+import { ProductsContext } from "../context/products-context";
 
-export const MyNavbar = () => {
+export const MyNavbar = (props) => {
   const [openNav, setOpenNav] = React.useState(false);
+  const { getTotalQuantityCartAmount } = useContext(ProductsContext);
+
+  const getDefaultCart = () => {
+    let cart = {};
+    for (let i = 1; i < PRODUCTS.length + 1; i++) {
+      cart[i] = 0;
+    }
+    return cart;
+  };
 
   React.useEffect(() => {
     window.addEventListener(
@@ -55,19 +67,61 @@ export const MyNavbar = () => {
             <div className="mr-4 hidden lg:block">
               <Link to="/">{navList}</Link>
             </div>
+
             <Link to="/cart">
               <Button
                 ripple={false}
-                variant="outlined"
+                variant="text"
                 color="blue-gray"
                 className="flex items-center gap-2 rounded-full transform hover:scale-110 motion-reduce:transform-none"
               >
-                Корзина{" "}
-                <ShoppingCartIcon
-                  color="blue-gray"
-                  strokeWidth={2}
-                  className="h-8 w-8"
-                />
+                {/* {console.log("cartItems: ", cartItems)} */}
+                {getTotalQuantityCartAmount() ? (
+                  <Badge
+                    content={
+                      getTotalQuantityCartAmount() > 99
+                        ? "99+"
+                        : getTotalQuantityCartAmount()
+                    }
+                    color="blue-gray"
+                    withBorder
+                    className=" ml-[-20px] w-8 h-6 align-center"
+                  >
+                    <ShoppingCartIcon
+                      color="blue-gray"
+                      strokeWidth={2}
+                      className="h-8 w-8"
+                    />
+                  </Badge>
+                ) : (
+                  <Badge
+                    content={0}
+                    color="blue-gray"
+                    withBorder
+                    className=" ml-[-20px] w-8 h-6 align-center"
+                  >
+                    <ShoppingCartIcon
+                      color="blue-gray"
+                      strokeWidth={2}
+                      className="h-8 w-8"
+                    />
+                  </Badge>
+                )}
+
+                {/* {getTotalCartAmount() !== 0 && (
+                  <Badge
+                    content="5"
+                    color="blue-gray"
+                    withBorder
+                    className=" ml-[-20px] w-7 h-5 align-center"
+                  >
+                    <ShoppingCartIcon
+                      color="blue-gray"
+                      strokeWidth={2}
+                      className="h-8 w-8"
+                    />
+                  </Badge>
+                )} */}
               </Button>
             </Link>
 

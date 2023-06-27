@@ -15,7 +15,7 @@ export const CartItem = (props) => {
         <img
           src={productImage}
           alt="Product"
-          className="w-1/4 overflow-hidden"
+          className="w-2/4 overflow-hidden"
         />
         <div>
           <b className="block mt-2 text-lg ">{productName}</b>
@@ -26,28 +26,23 @@ export const CartItem = (props) => {
             size="md"
             color="blue-gray"
             variant="outlined"
-            className="rounded-full w-26 h-19 mb-36 ml-120 mt-2"
+            className="rounded-full w-16 h-16 mb-36 ml-115 mt-2 shrink-0
+            "
           >
-            <MinusIcon strokeWidth={2} className="h-5 w-5" />
+            <MinusIcon strokeWidth={4} className="h-3 w-3" />
           </Button>
           <p className="text-xl pt-3 pr-4 font-sans font-semibold text-gray-600">
             {cartItems[id]}
           </p>
-          {/* <div className="">
-            <Input
-              variant="outlined"
-              className="text-center rounded-full w-20 mt-3"
-              color="blue-gray"
-            ></Input>
-          </div> */}
+
           <Button
             onClick={() => addToCart(id)}
             size="md"
             color="blue-gray"
             variant="outlined"
-            className="rounded-full mb-36 ml-120 mt-2"
+            className="rounded-full w-16 h-16 mb-36 ml-115 mt-2 shrink-0"
           >
-            <PlusIcon strokeWidth={2} className="h-5 w-5" />
+            <PlusIcon strokeWidth={4} className="h-3 w-3" />
           </Button>
         </>
         <div className="">

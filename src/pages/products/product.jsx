@@ -11,6 +11,28 @@ import {
 
 import { PlusIcon } from "@heroicons/react/24/outline";
 
+const HighlightText = ({ text, highlight }) => {
+  // Create a regular expression to match the highlight text
+  const regex = new RegExp(`(${highlight})`, "gi");
+
+  // Split the text into parts: before, highlighted, and after
+  const parts = text.split(regex);
+
+  return (
+    <span>
+      {parts.map((part, index) =>
+        part.toLowerCase() === highlight.toLowerCase() ? (
+          <mark key={index} style={{ backgroundColor: "rgb(203 213 225)" }}>
+            {part}
+          </mark>
+        ) : (
+          <span key={index}>{part}</span>
+        )
+      )}
+    </span>
+  );
+};
+
 export const Product = (props) => {
   const { id, productName, price, productImage } = props.data;
   const { addToCart, cartItems } = useContext(ProductsContext);
@@ -21,15 +43,17 @@ export const Product = (props) => {
     <div className="">
       <div className="auto-cols-auto h-full bg-white rounded-lg shadow-md p-4">
         <img src={productImage} alt="Product" className="w-full" />
-        <b className="block mt-2 text-lg ">{productName}</b>
+        <b className="block mt-2 text-lg ">
+          <HighlightText text={productName} highlight={props.filteredPattern} />
+        </b>
         <p className="text-xl pt-3 pr-4 font-sans font-semibold text-gray-600">
           {price} ₽
         </p>
-        <div className="flex flex-items-center gap-3 justify-center mt-3">
+        <div className="flex items-center gap-3 justify-center mt-3">
           <Button
             onClick={() => addToCart(id)}
             color="blue-gray"
-            className="flex items-center gap-3 rounded-3xl"
+            className="flex grow-0 items-center gap-3 rounded-3xl focus:scale-100"
             variant="outlined"
             size="md"
           >
