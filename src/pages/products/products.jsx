@@ -3,14 +3,7 @@ import { PRODUCTS } from "../../productsList";
 import { Product } from "./product";
 import { ProductsContext } from "../../context/products-context";
 
-import {
-  Menu,
-  MenuHandler,
-  MenuList,
-  MenuItem,
-  Button,
-  Input,
-} from "@material-tailwind/react";
+import { Button, Input, Typography } from "@material-tailwind/react";
 
 import {
   AdjustmentsVerticalIcon,
@@ -23,7 +16,6 @@ export const SortingMenu = (props) => {
   const [isInputVisible, setIsInputVisible] = useState(false);
   const [sortPriceType, setSortPriceType] = useState("asc");
   const [inputState, setInputState] = useState("");
-  // const [filteredProducts, setFilteredProducts] = useState([]);
 
   const sortingByName = (inputState) => {
     const filtered = productsGrid.filter((product) =>
@@ -130,15 +122,25 @@ export const Products = () => {
         />{" "}
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 pl-5 pr-5 mt-5">
-        {filteredProducts.map((product, index) => (
-          <Product
-            key={index}
-            data={product}
-            filteredPattern={filteredPattern}
-          />
-        ))}
-      </div>
+      {filteredProducts.length === 0 ? (
+        <div className="flex justify-center items-center h-screen">
+          <Typography className="text-center" color="blue-gray" textGradient>
+            <div className="text-2xl font-sans font-semibold">
+              Мы ничего не нашли : (
+            </div>
+          </Typography>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 pl-5 pr-5 mt-5">
+          {filteredProducts.map((product, index) => (
+            <Product
+              key={index}
+              data={product}
+              filteredPattern={filteredPattern}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 };
