@@ -26,10 +26,10 @@ export const CartItem = (props) => {
             size="md"
             color="blue-gray"
             variant="outlined"
-            className="rounded-full w-16 h-16 mb-36 ml-115 mt-2 shrink-0
+            className="flex items-center justify-center rounded-full p-2 m-2 h-12 w-12 shrink-0
             "
           >
-            <MinusIcon strokeWidth={4} className="h-3 w-3" />
+            <MinusIcon strokeWidth={4} className="h-1/2 w-1/2" />
           </Button>
           <p className="text-xl pt-3 pr-4 font-sans font-semibold text-gray-600">
             {cartItems[id]}
@@ -40,9 +40,9 @@ export const CartItem = (props) => {
             size="md"
             color="blue-gray"
             variant="outlined"
-            className="rounded-full w-16 h-16 mb-36 ml-115 mt-2 shrink-0"
+            className="flex items-center justify-center rounded-full p-2 m-2 h-12 w-12 shrink-0"
           >
-            <PlusIcon strokeWidth={4} className="h-3 w-3" />
+            <PlusIcon strokeWidth={4} className="h-1/2 w-1/2" />
           </Button>
         </>
         <div className="">

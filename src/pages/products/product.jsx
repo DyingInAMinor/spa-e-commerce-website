@@ -7,12 +7,13 @@ import {
   CardBody,
   Typography,
   Button,
-  ButtonGroup,
-  MinusIcon,
-  PlusIcon,
 } from "@material-tailwind/react";
 
-import { ShoppingCartIcon } from "@heroicons/react/24/outline";
+import {
+  ShoppingCartIcon,
+  MinusIcon,
+  PlusIcon,
+} from "@heroicons/react/24/outline";
 
 const HighlightText = ({ text, highlight }) => {
   // Create a regular expression to match the highlight text
@@ -38,7 +39,7 @@ const HighlightText = ({ text, highlight }) => {
 
 export const Product = (props) => {
   const { id, productName, price, productImage } = props.data;
-  const { addToCart, cartItems } = useContext(ProductsContext);
+  const { addToCart, removeFromCart, cartItems } = useContext(ProductsContext);
 
   const cartItemAmount = cartItems[id];
 
@@ -49,37 +50,47 @@ export const Product = (props) => {
         <b className="block mt-2 text-lg ">
           <HighlightText text={productName} highlight={props.filteredPattern} />
         </b>
-        <p className="text-xl pt-3 pr-4 font-sans font-semibold text-gray-600">
+        <p className="text-xl pt-3  font-sans font-semibold text-gray-600">
           {price} ₽
         </p>
-        <div className="flex items-center gap-3 justify-center mt-3">
-          <Button
-            color="blue-gray"
-            className="flex grow-0 items-center gap-3 rounded-3xl focus:scale-100"
-            variant="outlined"
-            size="md"
-            onClick={() => addToCart(id)}
-          >
-            <ShoppingCartIcon strokeWidth={2} className="h-5 w-5" /> Добавить в
-            корзину{" "}
-            {cartItemAmount > 0 && (
-              <div className="flex flex-col w-max gap-4">
-                {/* <p className="text-lg  min-h-0 min-w-0 mb-1">
-                    ({cartItemAmount})
-                  </p> */}
+        <div className="flex items-center justify-center mt-3">
+          {cartItemAmount > 0 ? (
+            <div className="flex items-center justify-center flex-row w-max gap-4">
+              <Button
+                onClick={() => removeFromCart(id)}
+                size="md"
+                color="blue-gray"
+                variant="outlined"
+                className="flex items-center justify-center rounded-full p-2 m-2 h-12 w-12"
+              >
+                <MinusIcon className="h-1/2 w-1/2" strokeWidth={4} />
+              </Button>
+              <p className="text-xl mr-3 ml-3 font-sans font-semibold text-gray-600">
+                {cartItemAmount}
+              </p>
 
-                {/* <ButtonGroup>
-                  <Button>
-                    <MinusIcon strokeWidth={4} className="h-3 w-3" />
-                  </Button>
-                  <Button>({cartItemAmount})</Button>
-                  <Button>
-                    <PlusIcon strokeWidth={4} className="h-3 w-3" />
-                  </Button>
-                </ButtonGroup> */}
-              </div>
-            )}
-          </Button>
+              <Button
+                onClick={() => addToCart(id)}
+                size="md"
+                color="blue-gray"
+                variant="outlined"
+                className="flex items-center justify-center rounded-full p-2 m-2 h-12 w-12"
+              >
+                <PlusIcon strokeWidth={4} className=" h-1/2 w-1/2" />
+              </Button>
+            </div>
+          ) : (
+            <Button
+              color="blue-gray"
+              className="flex grow-0 items-center gap-3 rounded-3xl focus:scale-100"
+              variant="outlined"
+              size="md"
+              onClick={() => addToCart(id)}
+            >
+              <ShoppingCartIcon strokeWidth={2} className="h-5 w-5" /> Добавить
+              в корзину{" "}
+            </Button>
+          )}
         </div>
       </div>
     </div>

@@ -29,7 +29,7 @@ export const SortingMenu = (props) => {
     setIsInputVisible(!isInputVisible);
   };
 
-  const { sortPrice, productsGrid, setProductsGrid } =
+  const { sortPrice, productsGrid, addToCart, removeFromCart } =
     useContext(ProductsContext);
 
   const handleSort = () => {
@@ -115,7 +115,7 @@ export const Products = () => {
   }, [productsGrid]);
   return (
     <div className="">
-      <div className="flex flex-col justify-center mb-4">
+      <div className="flex flex-col justify-center mt-20 mb-4">
         <SortingMenu
           setFilteredProducts={setFilteredProducts}
           setFilteredPattern={setFilteredPattern}

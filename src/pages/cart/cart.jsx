@@ -13,7 +13,7 @@ export const Cart = () => {
 
   return (
     <div>
-      <div className="grid-row-1 items-start auto-rows-min align-center justify-between mt-6 mb-6 gap-4 p-0 m-0">
+      <div className="grid-row-1 items-start auto-rows-min align-center justify-between mt-24 mb-6 gap-4 p-0 m-0">
         {PRODUCTS.map((product) =>
           cartItems[product.id] !== 0 ? (
             <CartItem key={product.id} data={product} />
@@ -60,7 +60,7 @@ export const Cart = () => {
         </div>
       ) : (
         <Typography color="blue-gray" textGradient>
-          <div className="mt-72 text-xl font-sans font-semibold text-center">
+          <div className="mt-80 text-xl font-sans font-semibold text-center">
             Здесь пусто :(<br></br>
             Добавим что-нибудь?
           </div>

@@ -35,7 +35,16 @@ export const MyNavbar = (props) => {
     <div className="mb-4 mt-2 flex flex-col lg:mb-0 lg:mt-0 lg:flex-row active:bg-transparent">
       <Button
         ripple={false}
-        size="md"
+        size="lg"
+        variant="text"
+        color="blue-gray"
+        className="flex justify-end rounded-full"
+      >
+        О нас
+      </Button>
+      <Button
+        ripple={false}
+        size="lg"
         variant="text"
         color="blue-gray"
         className="flex justify-end rounded-full"
@@ -47,7 +56,7 @@ export const MyNavbar = (props) => {
 
   return (
     <>
-      <Navbar className="sticky inset-0 z-10 h-max max-w-full rounded-none py-2 px-4 lg:px-8 lg:py-4">
+      <Navbar className="fixed top-0 left-1/2 transform -translate-x-1/2 z-10 rounded-none py-2 px-4 lg:px-8 lg:py-4">
         <div className="flex items-center justify-between text-blue-gray-900">
           <Typography className="mr-4 cursor-pointer py-1.5 font-medium">
             <Link to="/">
@@ -107,21 +116,6 @@ export const MyNavbar = (props) => {
                     />
                   </Badge>
                 )}
-
-                {/* {getTotalCartAmount() !== 0 && (
-                  <Badge
-                    content="5"
-                    color="blue-gray"
-                    withBorder
-                    className=" ml-[-20px] w-7 h-5 align-center"
-                  >
-                    <ShoppingCartIcon
-                      color="blue-gray"
-                      strokeWidth={2}
-                      className="h-8 w-8"
-                    />
-                  </Badge>
-                )} */}
               </Button>
             </Link>
 
